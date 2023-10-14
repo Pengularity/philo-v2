@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/wnguyen/42cursus/git/philo-v2",
-      "program": "/home/wnguyen/42cursus/git/philo-v2/build/Debug/outDebug",
+      "cwd": "/home/wnguyen/42cursus/git/philo-v2/src",
+      "program": "/home/wnguyen/42cursus/git/philo-v2/src/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

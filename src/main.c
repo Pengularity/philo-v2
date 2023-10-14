@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:06:39 by wnguyen           #+#    #+#             */
-/*   Updated: 2023/10/13 18:19:17 by wnguyen          ###   ########.fr       */
+/*   Updated: 2023/10/14 15:32:36 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	main(int ac, char **av)
 {
 	t_args		args;
 
+	if (ac < 5 || ac > 6)
+		return (ft_error("Invalid number of arguments"));
 	if (!(parse_args(ac, av, &args)))
 		return (ft_error("Invalid arguments"));
 	args.philo = malloc(sizeof(t_philo) * args.num_philo);
