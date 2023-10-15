@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 15:28:01 by wnguyen           #+#    #+#             */
-/*   Updated: 2023/10/14 18:15:47 by wnguyen          ###   ########.fr       */
+/*   Updated: 2023/10/15 18:26:09 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,11 @@ int	parse_args(int ac, char **av, t_args *args)
 	args->time_to_die = ft_atoi(av[2]);
 	args->time_to_eat = ft_atoi(av[3]);
 	args->time_to_sleep = ft_atoi(av[4]);
-	args->max_meals = -1;
+	args->nb_must_eat = -1;
 	if (ac == 6)
-		args->max_meals = ft_atoi(av[5]);
-	if (args->num_philo <= 0 || args->time_to_die <= 0
-		|| args->time_to_eat <= 0 || args->time_to_sleep <= 0
-		|| (ac == 6 && args->max_meals <= 0))
+		args->nb_must_eat = ft_atoi(av[5]);
+	if (args->num_philo <= 0 || args->time_to_die <= 0 || args->time_to_eat <= 0
+		|| args->time_to_sleep <= 0 || (ac == 6 && args->nb_must_eat <= 0))
 		return (0);
 	return (1);
 }
@@ -57,9 +56,9 @@ int	parse_args(int ac, char **av, t_args *args)
 static int	init_mutexes(t_args *args)
 {
 	if (pthread_mutex_init(&args->print_mutex, NULL)
-		||pthread_mutex_init(&args->death_mutex, NULL)
-		||pthread_mutex_init(&args->time_to_eat_mutex, NULL)
-		||pthread_mutex_init(&args->finish_eating_mutex, NULL))
+		|| pthread_mutex_init(&args->death_mutex, NULL)
+		|| pthread_mutex_init(&args->meal_mutex, NULL)
+		|| pthread_mutex_init(&args->finish_eating_mutex, NULL))
 		return (0);
 	return (1);
 }

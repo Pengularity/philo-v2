@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:06:39 by wnguyen           #+#    #+#             */
-/*   Updated: 2023/10/14 15:32:36 by wnguyen          ###   ########.fr       */
+/*   Updated: 2023/10/15 19:34:11 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	cleanup(t_args *args)
 		i++;
 	}
 	pthread_mutex_destroy(&args->death_mutex);
-	pthread_mutex_destroy(&args->time_to_eat_mutex);
+	pthread_mutex_destroy(&args->meal_mutex);
 	pthread_mutex_destroy(&args->finish_eating_mutex);
 	pthread_mutex_destroy(&args->print_mutex);
 	if (args->num_philo_finished_eating == args->num_philo)

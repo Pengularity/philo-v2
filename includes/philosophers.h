@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:28:15 by wnguyen           #+#    #+#             */
-/*   Updated: 2023/10/14 18:16:22 by wnguyen          ###   ########.fr       */
+/*   Updated: 2023/10/15 19:20:37 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@
 typedef struct s_philo
 {
 	int							id;
+	int							thread_id;
 	int							times_eaten;
 	int							last_meal_time;
 	int							has_finished_eating;
-	pthread_t					left_fork;
-	pthread_t					*right_fork;
+	pthread_mutex_t				left_fork;
+	pthread_mutex_t				*right_fork;
+	t_args						*args;
 }								t_philo;
 
 typedef struct s_args
@@ -43,14 +45,14 @@ typedef struct s_args
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				max_meals;
+	int				nb_must_eat;
 	int				stop_flag;
 	int				someone_has_died;
 	int				num_philo_finished_eating;
 	long			start_time;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	death_mutex;
-	pthread_mutex_t	time_to_eat_mutex;
+	pthread_mutex_t	meal_mutex;
 	pthread_mutex_t	finish_eating_mutex;
 	t_philo			*philo;
 }					t_args;
