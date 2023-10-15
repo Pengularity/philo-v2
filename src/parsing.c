@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 15:28:01 by wnguyen           #+#    #+#             */
-/*   Updated: 2023/10/15 18:26:09 by wnguyen          ###   ########.fr       */
+/*   Updated: 2023/10/15 20:50:47 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ static int	is_num(char *str)
 {
 	int	i;
 
+	i = 0;
 	if (!str || str[0] == '\0')
 		return (0);
 	while (str[i] == '0')
 		i++;
 	while (str[i])
 	{
-		if (str[i] < '0' || str[i] > ' 9')
+		if (str[i] < '0' || str[i] > '9')
 			return (0);
 		i++;
 	}
@@ -69,9 +70,9 @@ static int	init_philosophers(t_args *args, int i)
 	args->philo[i].times_eaten = 0;
 	args->philo[i].last_meal_time = args->start_time;
 	args->philo[i].has_finished_eating = 0;
-	if (pthread_mutex_init(&args->philo[i].left_fork, NULL))
+	if (pthread_mutex_init(&args->philo[i].left_fork, NULL) != 0)
 		return (0);
-	if (i == args->num_philo)
+	if (i == args->num_philo - 1)
 		args->philo[i].right_fork = &args->philo[0].left_fork;
 	else
 		args->philo[i].right_fork = &args->philo[i + 1].left_fork;
@@ -86,7 +87,7 @@ int	initialize(t_args *args)
 	if (!args->philo || !init_mutexes(args))
 		return (0);
 	i = 0;
-	args->stop_flag = 0;
+	// args->stop_flag = 0;
 	args->someone_has_died = 0;
 	args->num_philo_finished_eating = 0;
 	args->start_time = current_time();

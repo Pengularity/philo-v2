@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 17:06:39 by wnguyen           #+#    #+#             */
-/*   Updated: 2023/10/15 19:34:11 by wnguyen          ###   ########.fr       */
+/*   Updated: 2023/10/15 20:40:20 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ int	main(int ac, char **av)
 		return (ft_error("Invalid number of arguments"));
 	if (!(parse_args(ac, av, &args)))
 		return (ft_error("Invalid arguments"));
-	args.philo = malloc(sizeof(t_philo) * args.num_philo);
-	if (!args.philo)
-		return (ft_error("Failed to Malloc"));
+	// args.philo = malloc(sizeof(t_philo) * args.num_philo);
+	// if (!args.philo)
+	// 	return (ft_error("Failed to Malloc"));
 	if (!(initialize(&args)))
-		return (free(args.philo), ft_error("Failed to initialize threads"));
+		return (cleanup(&args), ft_error("Failed to initialize threads"));
 	if (!(start_simulation(&args)))
 		return ((cleanup(&args), ft_error("Failed to start simulation")));
-	cleanup(&args);
+	free(args.philo);
 	return (0);
 }

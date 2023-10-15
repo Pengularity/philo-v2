@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 14:28:15 by wnguyen           #+#    #+#             */
-/*   Updated: 2023/10/15 19:20:37 by wnguyen          ###   ########.fr       */
+/*   Updated: 2023/10/15 20:50:52 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,28 @@
 # define BRIGHT_GREEN "\033[92m"
 # define RESET "\033[0m"
 
+typedef struct s_args	t_args;
+
 typedef struct s_philo
 {
 	int							id;
-	int							thread_id;
 	int							times_eaten;
 	int							last_meal_time;
 	int							has_finished_eating;
+	pthread_t					thread_id;
 	pthread_mutex_t				left_fork;
 	pthread_mutex_t				*right_fork;
 	t_args						*args;
 }								t_philo;
 
-typedef struct s_args
+struct s_args
 {
 	int				num_philo;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nb_must_eat;
-	int				stop_flag;
+	// int				stop_flag;
 	int				someone_has_died;
 	int				num_philo_finished_eating;
 	long			start_time;
@@ -55,15 +57,17 @@ typedef struct s_args
 	pthread_mutex_t	meal_mutex;
 	pthread_mutex_t	finish_eating_mutex;
 	t_philo			*philo;
-}					t_args;
+} ;
 
 void	print_status(t_philo *philo, t_args *args, char *color, char *status);
-void	*philosopher_routine(t_philo *philo, t_args *args);
+void	*philosopher_routine(void *philo_void);
 int		ft_error(char *str);
 void	ft_sleep(long int time_in_ms);
+int		ft_atoi(const char *str);
+void	ft_putstr_fd(char *str, int fd);
 long	current_time(void);
 int		parse_args(int ac, char **av, t_args *args);
 int		initialize(t_args *args);
-
+int		start_simulation(t_args *args);
 
 #endif

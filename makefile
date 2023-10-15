@@ -1,18 +1,18 @@
 NAME = philosophers
 
-INCLUDE = ./include/
+INCLUDE = ./includes/
 
 CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror -I$(INCLUDE)
 
-SRCS = src/init.c \
+SRCS = src/parsing.c \
 			src/libft.c \
 			src/utils.c \
 			src/main.c \
 			src/routine.c \
-			src/thread.c \
-			src/free.c \
+			src/simulation.c \
+			
 
 OBJS = $(SRCS:.c=.o)
 

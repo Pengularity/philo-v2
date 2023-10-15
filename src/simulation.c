@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 18:21:01 by wnguyen           #+#    #+#             */
-/*   Updated: 2023/10/15 19:34:02 by wnguyen          ###   ########.fr       */
+/*   Updated: 2023/10/15 20:07:37 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,19 @@ void	*monitor(void *philo_void)
 }
 
 
-void	*thread(t_philo *philo, t_args *args)
+void	*thread(void *philo_void)
 {
+	t_philo		*philo;
 	pthread_t	monitor_thread;
 
+	philo = (t_philo *)philo_void;
 	pthread_create(&monitor_thread, NULL, &monitor, (void *)philo);
 	pthread_detach(monitor_thread);
-	philosopher_routine(philo, args);
+	philosopher_routine(philo);
 	return (NULL);
 }
 
-void	*start_simulation(t_args *args)
+int	start_simulation(t_args *args)
 {
 	int		i;
 
@@ -75,11 +77,10 @@ void	*start_simulation(t_args *args)
 	while (i < args->num_philo)
 	{
 		if (pthread_create(&args->philo[i].thread_id,
-				NULL, philosopher_routine, &args->philo[i]) != 0)
+				NULL, thread, &args->philo[i]) != 0)
 			return (ft_error("Failed to create thread"), 0);
 		i++;
 	}
-
 	i = 0;
 	while (i < args->num_philo)
 	{

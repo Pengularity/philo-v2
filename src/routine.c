@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:18:36 by wnguyen           #+#    #+#             */
-/*   Updated: 2023/10/15 19:31:10 by wnguyen          ###   ########.fr       */
+/*   Updated: 2023/10/15 20:05:00 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	eat(t_philo *philo, t_args *args)
 	print_status(philo, args, WHITE, "has taken a fork");
 	print_status(philo, args, GREEN, "is eating");
 	pthread_mutex_lock(&args->meal_mutex);
-	gettimeofday(&philo->last_meal_time, NULL);
+	philo->last_meal_time = current_time();
 	pthread_mutex_unlock(&args->meal_mutex);
 	ft_sleep(args->time_to_eat);
 	pthread_mutex_lock(&args->meal_mutex);
@@ -54,11 +54,17 @@ void	sleep_and_think(t_philo *philo, t_args *args)
 	print_status(philo, args, YELLOW, "is thinking");
 }
 
-void	*philosopher_routine(t_philo *philo, t_args *args)
+void	*philosopher_routine(void *philo_void)
 {
+	t_philo	*philo;
+	t_args	*args;
+
+	philo = (t_philo *)philo_void;
+	args = philo->args;
+
 	if (philo->id % 2 == 0)
 		usleep(args->time_to_eat / 10);
-	while (!is_dead(philo) && !philo->has_finished_eating)
+	while (!args->someone_has_died && !philo->has_finished_eating)
 	{
 		eat(philo, args);
 		sleep_and_think(philo, args);
@@ -70,4 +76,5 @@ void	*philosopher_routine(t_philo *philo, t_args *args)
 		// 	pthread_mutex_unlock(&args->finish_eating_mutex);
 		// }
 	}
+	return (NULL);
 }
